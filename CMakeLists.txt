@@ -44,9 +44,12 @@ include_directories(${FFTW_INCLUDES} ${Boost_INCLUDE_DIR} libs/core libs/sound_i
 #    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath,${LIBSWSCALE_RPATH}")
 #endif (LINUX)
 
+# General package setup
 set(CPACK_PACKAGE_NAME scape-xcorrsound)
 set(CPACK_PACKAGE_VERSION 0.9.1)
+set(CPACK_PACKAGE_VENDOR "SCAPE")
 
+# Debian package configuration section
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE amd64)
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6, libboost-program-options-dev, libfftw3-dev")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Jesper Sindahl Nielsen <jsn@statsbiblioteket.dk>")
@@ -56,6 +59,31 @@ waveform-compare: Compare two wave files to determine if they represent the same
 sound-match: find the location of a small wavefile inside a big wavefile
 overlap-analysis: find the overlap between two wave files")
 
+# RPM package configuration section
+set(CPACK_RPM_PACKAGE_MAINTAINER "Tom G. Christensen <swpkg@statsbiblioteket.dk>")
+set(CPACK_RPM_PACKAGE_SUMMARY "A collection of tools for sound analysis")
+set(CPACK_RPM_PACKAGE_DESCRIPTION
+"The xcorrSound package contains several tools.
+ - overlap-analysis is a tool to find the overlap between two audio files.
+ - waveform-compare is a tool that splits two audio files into equal sized
+   blocks and outputs the correlation for each block (a_i,b_i), if a and b
+   was the input.
+ - sound-match is a tool to find the location of a small wavefile inside a
+   big wavefile
+
+The tools all make use of cross correlation, which can be computed through
+the Fourier transform.")
+set(CPACK_RPM_PACKAGE_LICENSE "GPLv2+")
+set(CPACK_RPM_PACKAGE_GROUP "Applications/Multimedia")
+set(CPACK_RPM_PACKAGE_URL "https://github.com/openplanets/scape-xcorrsound")
+
+#configure_file("${CMAKE_CURRENT_SOURCE_DIR}/scape-xcorrsound.spec.in" "${CMAKE_CURRENT_BINARY_DIR}/scape-xcorrsound.spec" @ONLY IMMEDIATE)
+#set(CPACK_RPM_USER_BINARY_SPECFILE "${CMAKE_CURRENT_BINARY_DIR}/scape-xcorrsound.spec")
+
+set(CPACK_GENERATOR "DEB;RPM")
+include(CPack)
+# Finished package setup
+
 #add_subdirectory (tpie)
 add_subdirectory (libs)
 add_subdirectory (apps)
@@ -64,5 +92,3 @@ add_subdirectory (man)
 #add_executable(tpietest tpietest.cc)
 #target_link_libraries(tpietest tpie)
 
-INCLUDE(CPack)
-SET(CPACK_GENERATOR "DEB")

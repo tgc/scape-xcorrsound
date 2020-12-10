@@ -221,13 +221,6 @@ namespace sound_index {
             wsr.getSamplesForChannel(0, samples);
 
         } else if (filename.substr(filename.size()-3, 3) != "wav") {
-            std::stringstream tmpss;
-
-            AudioFile a(tmpss.str().c_str());
-            AudioStream as(a.getStream(0));
-
-            as.read(a.getNumberOfSamplesPrChannel(), samples);
-
             size_t idx = 0;
             for (size_t i = filename.size(); i > 0; --i) {
                 if (filename[i-1] == '/') {
@@ -236,6 +229,7 @@ namespace sound_index {
                 }
             }
 
+            std::stringstream tmpss;
             std::string tmpDir = ::getTmpDir();
             tmpss << tmpDir << filename.substr(idx, std::string::npos) << ".wav";
 
@@ -250,6 +244,10 @@ namespace sound_index {
                 res = pclose(cmd);
                 return; // error
             }
+            AudioFile a(tmpss.str().c_str());
+            AudioStream as(a.getStream(0));
+            as.read(a.getNumberOfSamplesPrChannel(), samples);
+
             std::stringstream rmss;
             rmss << "rm -rf " << tmpss.str();
             cmd = popen(rmss.str().c_str(), "r");

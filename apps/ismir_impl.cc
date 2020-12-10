@@ -44,7 +44,7 @@ namespace {
 	size_t end = of.tellp() / 4;
 	of.close();
 
-	std::string mapFilename = "map_" + dbFilename;
+	std::string mapFilename = dbFilename + ".map";
 	std::ofstream mof(mapFilename.c_str(), std::ios::out | std::ios::app);
 
 	typedef std::map<size_t, string>::iterator m_iter;
@@ -72,7 +72,7 @@ namespace {
 
 	in.close();
 
-	std::string mapFilename = "map_" + filename;
+	std::string mapFilename = filename + ".map";
 	std::ifstream in_map(mapFilename.c_str(), std::ios::in);
 	while (!in_map.eof()) {
 	    size_t idx; std::string filename;
@@ -190,14 +190,14 @@ void query(const char *file) {
     for (size_t i = 0; i < db.size() - fingerprints.size(); ++i) {
 
         //uint32_t distance = 0;
-	uint32_t dist2 = 0;
+        uint32_t dist2 = 0;
         //for (size_t j = 0; j < fingerprints.size(); ++j) {
-	for (size_t j = fingerprints.size()/2; j < fingerprints.size()/2+32; ++j) {
+        for (size_t j = fingerprints.size()/2; j < fingerprints.size()/2+32; ++j) {
             uint32_t x = static_cast<uint32_t>(fingerprints[j] ^ db[i+j]);
             //uint32_t cnt = hammingWeight(x);
-	    //uint32_t cnt = NumberOfSetBits(x);
-	    uint32_t cnt = hammingLookup16(x);
-	    dist2 += cnt;
+            //uint32_t cnt = NumberOfSetBits(x);
+            uint32_t cnt = hammingLookup16(x);
+            dist2 += cnt;
             //if (cnt > 10) ++distance;
 
         }
@@ -206,30 +206,32 @@ void query(const char *file) {
             bestMatch = i;
         }
         //if (distance < fingerprints.size()*3/4) {
-	//if (distance <= 17) {
-	if (dist2 <= 358) { //0.35 * 1024 ~= 358
+        //if (distance <= 17) {
+        if (dist2 <= 358) { //0.35 * 1024 ~= 358
             map<size_t, string>::iterator iter = files.lower_bound(i);
 	    
-	    //size_t fileId = iter->first;
-	    
-	    string filename = iter->second;
+            //size_t fileId = iter->first;
 
-	    size_t start = 0;
-	    if (iter != files.begin()) {
-		--iter;
-		start = iter->first;
-	    }
+            string filename = iter->second;
 
-	    size_t sampleInFile = i - start;
+            size_t start = 0;
+            if (iter != files.begin()) {
+	        --iter;
+	        start = iter->first;
+            }
 
-	    string timestamp = getTimestampFromSeconds(sampleInFile*advance / sampleRate);
-	    cout << "match in " << filename 
-		 << " at " << timestamp
-		 << " with distance " << dist2 << endl;
-	    
-	    //cout << i << '\t' << 10 << endl;
+            size_t sampleInFile = i - start;
 
-	}
+            string timestamp = getTimestampFromSeconds(sampleInFile*advance / sampleRate);
+            cout << "match in " << filename
+	         << " at " << timestamp
+	         << " with distance " << dist2 << endl;
+            cout << "debug: sampleInFile=" << sampleInFile
+                             << " advance=" << advance
+                             << " sampleRate=" << sampleRate << endl;
+            //cout << i << '\t' << 10 << endl;
+
+        }
     }
 
     map<size_t, string>::iterator iter = files.lower_bound(bestMatch);
@@ -273,9 +275,9 @@ void insert_file(const char *file) {
 int main(int argc, char *argv[]) {
 
     if (argc < 2) {
-	cout << "usage:" << endl;
-	cout << "./ismir_impl <# db files> <# query files> [db file 1,.., db file n] [q file 1,.. q file m]" << endl << endl;
-	cout << "If #db files > 0, they are appended to file string.bin and map_string.bin" << endl << endl;
+        cout << "usage:" << endl;
+        cout << "./ismir_impl <# db files> <# query files> [db file 1,.., db file n] [q file 1,.. q file m]" << endl << endl;
+        cout << "If #db files > 0, they are appended to file string.bin and string.bin.map" << endl << endl;
         return 1;
     }
 

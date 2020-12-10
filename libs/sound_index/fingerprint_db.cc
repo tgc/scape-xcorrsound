@@ -41,7 +41,7 @@ namespace {
         size_t end = of.tellp() / 4;
         of.close();
 
-        std::string mapFilename = "map_" + dbFilename;
+        std::string mapFilename = dbFilename + ".map";
         std::ofstream mof(mapFilename.c_str(), std::ios::out | std::ios::app);
 
         mof << end << " " << indexedName << std::endl;
@@ -60,7 +60,7 @@ namespace {
         std::string mapFilePrefix = filename.substr(0, idx);
         std::string mapFileSuffix = filename.substr(idx, std::string::npos);
         std::stringstream ss;
-        ss << mapFilePrefix << "map_" << mapFileSuffix;
+        ss << mapFilePrefix  << mapFileSuffix << ".map";
         mapFile = ss.str();
     }
 

@@ -245,25 +245,25 @@ void si::fingerprint_db::query_scan(std::string filename, std::vector<std::strin
         }
 
         //for (size_t i = 0; i < end-macro_sz; ++i,++pos) {
-	for (size_t i = 0; i < end-macro_sz; i+=8,pos+=8) {
+        for (size_t i = 0; i < end-macro_sz; i+=8,pos+=8) {
             if (pos - prevMatchPos < (this->fp_strategy->getSampleRate()/64) &&
 		prevMatchPos != std::numeric_limits<size_t>::max()) continue;
 
             size_t dist = 0;
-	    size_t bestMatchPos = std::numeric_limits<size_t>::max();
-	    size_t startJ = 50;
-	    bool earlyTermination = false;
-	    
-	    std::tie(earlyTermination, dist) = hammingEarlyTerminate(fingerprints, db, i);
+            size_t bestMatchPos = std::numeric_limits<size_t>::max();
+            size_t startJ = 50;
+            bool earlyTermination = false;
 
-	    if (earlyTermination) continue;
+            std::tie(earlyTermination, dist) = hammingEarlyTerminate(fingerprints, db, i);
 
-	    std::tie(dist, bestMatchPos) = checkNearPos(fingerprints, this->dbFilename,
-							pos, db, i);
-	    
-	    //dist = fullHamming(fingerprints, db, i);
-	    //std::tie(earlyTermination, dist) = hammingEarlyTerminate(fingerprints, db, i);
-	    if (!earlyTermination && dist < macro_sz*sizeof(uint32_t)*0.35*8) {
+            if (earlyTermination) continue;
+
+            std::tie(dist, bestMatchPos) = checkNearPos(fingerprints, this->dbFilename,
+						        pos, db, i);
+
+            //dist = fullHamming(fingerprints, db, i);
+            //std::tie(earlyTermination, dist) = hammingEarlyTerminate(fingerprints, db, i);
+            if (!earlyTermination && dist < macro_sz*sizeof(uint32_t)*0.35*8) {
                 prevMatchPos = pos;
                 std::map<size_t, std::string>::iterator iter = idToFile.lower_bound(pos);
 
@@ -293,16 +293,15 @@ void si::fingerprint_db::query_scan(std::string filename, std::vector<std::strin
                 //ss << "fdsa" << std::endl;
                 ret.push_back(ss.str());
             }
-	    if (i + nearRange > end-macro_sz) {
+            if (i + nearRange > end-macro_sz) {
 		size_t tmp = end-macro_sz-i;
 		i = i + tmp;
 		pos = pos + tmp;
-	    } else {
+            } else {
 		i+=nearRange; pos+=nearRange;
-	    }
+            }
         }
     }
-
 }
 
 void si::fingerprint_db::query_preprocessed(std::string filename, std::vector<std::string> &results) {

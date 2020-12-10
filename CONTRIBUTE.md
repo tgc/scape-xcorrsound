@@ -24,7 +24,7 @@ Preparations Debian/Ubuntu:
 
 Preparations Centos/Fedora:
 
-    sudo yum install gcc gcc-c++ glibc boost-devel fftw-devel rubygem-ronn
+    sudo yum install gcc gcc-c++ glibc boost-devel fftw-devel rubygem-ronn cmake make
 
 Preparations Mac OS X run
 

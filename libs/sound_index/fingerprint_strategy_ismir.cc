@@ -234,7 +234,7 @@ namespace sound_index {
             tmpss << tmpDir << filename.substr(idx, std::string::npos) << ".wav";
 
             std::stringstream ss;
-            ss << "ffmpeg -i " << filename << " -ar 5512 " << tmpss.str();
+            ss << "ffmpeg -hide_banner -loglevel error -i " << filename << " -ar 5512 " << tmpss.str();
             FILE* cmd = popen(ss.str().c_str(), "r");
             int res = pclose(cmd);
             if (res == -1) {

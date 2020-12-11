@@ -60,16 +60,16 @@ void init(int argc, char *argv[]) {
 
     if (vm.count("query")) {
         queryFile = vm["query"].as<std::string>();
-	queryExists = true;
+        queryExists = true;
     } else {
         std::cout << "A query file must be provided" << std::endl;
         exit(1);
     }
 
     if (vm.count("processed-query")) {
-	processedQueryFile = vm["processed-query"].as<std::string>();
+        processedQueryFile = vm["processed-query"].as<std::string>();
     } else {
-	queryExists = true;
+        queryExists = true;
     }
 
     if (vm.count("dbname")) {

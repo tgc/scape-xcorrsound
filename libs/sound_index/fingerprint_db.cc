@@ -294,11 +294,11 @@ void si::fingerprint_db::query_scan(std::string filename, std::vector<std::strin
                 ret.push_back(ss.str());
             }
             if (i + nearRange > end-macro_sz) {
-		size_t tmp = end-macro_sz-i;
-		i = i + tmp;
-		pos = pos + tmp;
+                size_t tmp = end-macro_sz-i;
+                i = i + tmp;
+                pos = pos + tmp;
             } else {
-		i+=nearRange; pos+=nearRange;
+                i+=nearRange; pos+=nearRange;
             }
         }
     }

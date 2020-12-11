@@ -24,18 +24,22 @@ void query(std::string &dbname, std::string &queryFile) {
 
 void init(int argc, char *argv[]) {
 
-    std::string dbname;
+    std::vector<std::string> dbname;
     std::string queryFile;
     std::string processedQueryFile;
     
     po::options_description generic("Program options");
     generic.add_options()
         ("help,h", "Print help message and return, everything else is ignored");
-    
+
+    po::positional_options_description positional;
+        positional.add("dbname", -1);
+
+
     po::options_description hidden("Settings");
     hidden.add_options()
 	("query,q", po::value<std::string>(), "Audio query file")
-	("dbname,d", po::value<std::string>(), "Database name")
+	("dbname,d", po::value<std::vector<std::string>>(), "Database names")
 	("processed-query,p", po::value<std::string>(), "Preprocessed query file");
 
     po::options_description all("Allowed options");
@@ -45,7 +49,7 @@ void init(int argc, char *argv[]) {
     visible.add(generic);
 
     po::variables_map vm;
-    po::store(po::command_line_parser(argc, argv).options(all).run(), vm);
+    po::store(po::command_line_parser(argc, argv).options(all).positional(positional).run(), vm);
 
     if (vm.count("help")) {
         std::cout << "Usage: ismir_query SETTINGS" << std::endl << std::endl;
@@ -73,13 +77,17 @@ void init(int argc, char *argv[]) {
     }
 
     if (vm.count("dbname")) {
-        dbname = vm["dbname"].as<std::string>();
+        dbname = vm["dbname"].as<std::vector<std::string>>();
     } else {
         std::cout << "dbname must be provided" << std::endl;
         exit(1);
     }
 
-    query(dbname, queryFile);
+    for (size_t i = 0; i < dbname.size(); ++i) {
+        std::string current_dbname(dbname[i]);
+
+        query(current_dbname, queryFile);
+    }
 
 }
 

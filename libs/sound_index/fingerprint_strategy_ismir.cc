@@ -234,12 +234,12 @@ namespace sound_index {
             tmpss << tmpDir << filename.substr(idx, std::string::npos) << ".wav";
 
             std::stringstream ss;
-            ss << "ffmpeg -hide_banner -loglevel error -i " << filename << " -ar 5512 " << tmpss.str();
+            ss << "ffmpeg -hide_banner -loglevel error -i '" << filename << "' -ar 5512 '" << tmpss.str() << "'";
             FILE* cmd = popen(ss.str().c_str(), "r");
             int res = pclose(cmd);
             if (res == -1) {
                 std::stringstream rmss;
-                rmss << "rm -rf " << tmpss.str();
+                rmss << "rm -rf '" << tmpss.str() << "'";
                 cmd = popen(rmss.str().c_str(), "r");
                 res = pclose(cmd);
                 return; // error
@@ -249,7 +249,7 @@ namespace sound_index {
             as.read(a.getNumberOfSamplesPrChannel(), samples);
 
             std::stringstream rmss;
-            rmss << "rm -rf " << tmpss.str();
+            rmss << "rm -rf '" << tmpss.str() << "'";
             cmd = popen(rmss.str().c_str(), "r");
             int resCmd = pclose(cmd);            
         } else {

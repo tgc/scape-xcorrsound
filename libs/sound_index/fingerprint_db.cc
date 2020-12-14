@@ -14,6 +14,7 @@
 #include <tuple>
 
 namespace si = sound_index;
+//using namespace std;
 
 namespace {
 
@@ -175,7 +176,8 @@ void si::fingerprint_db::open(std::string filename) {
 
     size_t id; std::string file;
 
-    while (fin >> id >> file) {
+    while (fin >> id) {
+        getline(fin >> std::ws, file);
         idToFile[id] = file;
     }
 
@@ -284,8 +286,8 @@ void si::fingerprint_db::query_scan(std::string filename, std::vector<std::strin
                 //std::string timestamp(ss2.str());
                 std::stringstream ss;
                 
-                ss << "match in " << filenameRes 
-                   << " at " << timestamp
+                ss << "match in '" << filenameRes
+                   << "' at " << timestamp
                    << " with distance " << dist;
                 // if (atLeastOne) {
                 //     ss << " and at least one perfect match";

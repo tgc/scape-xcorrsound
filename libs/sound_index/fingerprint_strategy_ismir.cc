@@ -244,6 +244,7 @@ namespace sound_index {
                 res = pclose(cmd);
                 return; // error
             }
+//            std::cout << "Here  " << tmpss.str().c_str() <<": " << filename << std::endl;
             AudioFile a(tmpss.str().c_str());
             AudioStream as(a.getStream(0));
             as.read(a.getNumberOfSamplesPrChannel(), samples);

@@ -3,10 +3,12 @@
 #include <fingerprint_db.hh>
 #include <fstream>
 #include <iostream>
+//#include <ios>
 #include <string>
 
 namespace po = boost::program_options;
 namespace si = sound_index;
+using namespace std;
 
 namespace {
 
@@ -31,10 +33,11 @@ void bulk() {
 
     std::string x;
 
-    while (fin >> x) {
+    for( std::string x; getline( fin, x ); ) {
         // progress info
-        std::cout << x << std::endl;
-        db.insert(x);
+       std::cout << "Starting indexing of '" << x << "'" << std::endl;
+       db.insert(x);
+       std::cout << "Completed indexing of '" << x << "'" << std::endl;
     }
 
     db.close();

@@ -14,7 +14,9 @@ If given a WAV file, you must ensure that it are in 5512Hz beforehand.
 
 ## OPTIONS
   -q [ --query ] arg           Audio query file
+
   -d [ --dbname ] arg          List of databases to query. At least one must be given
+
   -p [ --processed-query ] arg Preprocessed query file. Not currently implemented
 
 ## AUTHOR

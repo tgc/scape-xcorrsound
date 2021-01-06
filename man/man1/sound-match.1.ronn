@@ -13,7 +13,9 @@ Note that all the tools will need access to write to a file called <tool>.log wh
 
 ## OPTIONS
  -c [ --criteria ] arg       How good should a match be. Between 1.0 and 0.0. Default 0.3
+
  -v [ --version ]           Print version
+
  -h [ --help ]              Print help
 
 

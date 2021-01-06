@@ -65,15 +65,16 @@ the first block's offset On failure there will be a message saying
 during which timestamp the offset did not line up.
 
 ## OPTIONS
- * "--block-size=N"
+
+ --block-size=N
 is the (integer) number of seconds pr block. By default N=1.
 
-*  --threshold=X
+ --threshold=X
 is a threshold value in [0,1], by default X=0.97. The threshold
 indicates how well two files should match to be accepted with 1
 meaning perfect match.
 
- *  --channel=c
+ --channel=c
 is an integer giving the channel according to the wav
 specification. By default c = 0.
 
@@ -83,5 +84,6 @@ Note that all the tools will need access to write to a file called
 
 ## RETURN VALUES
 waveform-compare returns 0 if the files was found to be identical. It will return nonzero otherwise
+
 ## AUTHOR
 Jesper Sindahl Nielsen <jsn@statsbiblioteket.dk>

@@ -1,4 +1,4 @@
-set(ASCIIDOC_MANS_SRC waveform-compare.1 overlap-analysis.1 sound-match.1 xcorrsound.1)
+set(ASCIIDOC_MANS_SRC waveform-compare.1 overlap-analysis.1 sound-match.1 xcorrsound.1 ismir_build_index.1 ismir_merge.1 ismir_query.1)
 
 foreach(manpage ${ASCIIDOC_MANS_SRC})
       add_custom_command(OUTPUT ${manpage}

@@ -32,4 +32,4 @@ target_link_libraries(ismir_merge core sound_index ${Boost_LIBRARIES})
 
 #target_link_libraries(mything tpie)
 
-install(TARGETS overlap-analysis sound-match waveform-compare RUNTIME DESTINATION bin)
+install(TARGETS overlap-analysis sound-match waveform-compare ismir_merge ismir_build_index ismir_query RUNTIME DESTINATION bin)

@@ -1,0 +1,133 @@
+(cd ~/projects/scape-xcorrsound/dr-dat-files/P1; ls -1 *.list) | xargs -r -P8 -I{split}  \
+../build/apps/ismir_build_index \
+	-d ~/projects/scape-xcorrsound/dr-dat-files/db/{split}.index \
+	-f ~/projects/scape-xcorrsound/dr-dat-files/P1/{split} \
+	@>  ~/projects/scape-xcorrsound/dr-dat-files/P1.log	;
+	
+	
+(cd ~/projects/scape-xcorrsound/dr-dat-files/P3; ls -1 *.list) | xargs -r -P8 -I{split}  bash -c "\
+../build/apps/ismir_build_index \
+	-d ~/projects/scape-xcorrsound/dr-dat-files/db/{split}.index \
+	-f ~/projects/scape-xcorrsound/dr-dat-files/P3/{split} \
+	@>  ~/projects/scape-xcorrsound/dr-dat-files/P3.log"	;
+	
+
+(cd ~/projects/scape-xcorrsound/dr-dat-files/P4; ls -1 *.list) | xargs -r -P8 -I{split}  \
+../build/apps/ismir_build_index \
+	-d ~/projects/scape-xcorrsound/dr-dat-files/db/{split}.index \
+	-f ~/projects/scape-xcorrsound/dr-dat-files/P4/{split} \
+	@>  ~/projects/scape-xcorrsound/dr-dat-files/P4.log	;
+	
+	
+	
+	
+
+:) 11:31:37 abr@abr-pc:~/projects/scape-xcorrsound$ cat dr-dat-files/db/dr-dat.P1.*.map | wc -l
+11:31:45 52854
+:) 11:31:45 abr@abr-pc:~/projects/scape-xcorrsound$ cat dr-dat-files/db/dr-dat.P2.*.map | wc -l
+11:31:48 44985
+:) 11:31:48 abr@abr-pc:~/projects/scape-xcorrsound$ cat dr-dat-files/db/dr-dat.P3.*.map | wc -l
+11:31:52 5118
+:) 11:31:52 abr@abr-pc:~/projects/scape-xcorrsound$ cat dr-dat-files/db/dr-dat.P4.*.map | wc -l
+11:31:57 24
+
+:) 11:31:57 abr@abr-pc:~/projects/scape-xcorrsound$ grep '/P1_' dr-dat.files.list | wc -l
+11:32:16 52854
+:) 11:32:16 abr@abr-pc:~/projects/scape-xcorrsound$ grep '/P2_' dr-dat.files.list | wc -l
+11:32:24 44985
+:) 11:32:24 abr@abr-pc:~/projects/scape-xcorrsound$ grep '/P3_' dr-dat.files.list | wc -l
+11:32:30 70156
+:) 11:32:30 abr@abr-pc:~/projects/scape-xcorrsound$ grep '/P4_' dr-dat.files.list | wc -l
+11:32:36 10631
+
+
+Kør P3 færdig i 00-04 år intervallet på abr-pc
+Kør P3 ?-99 intervallet på miaplacidus
+
+source /opt/ffmpeg43/enable
+export TmpSoundIndex=/dev/shm/
+(cd /data01/larm/dr-dat-index/filelists/P3/; ls -1 *.list | grep -v 'P3\.0') | \
+xargs -r -P22 -I{split}  ismir_build_index \
+ -d /data01/larm/dr-dat-index/P3/{split}.index \
+ -f /data01/larm/dr-dat-index/filelists/P3/{split} \
+ @>  ~/P3.log;
+	
+	
+	
+Crashed on [mp3 @ 0x52e8440] Failed to read frame size: Could not seek to 1026.
+/dr-dat/1/files/Batch05/Disc08/mp3_128kbps/P3_1800_2000_910123_001.mp3: Invalid argument
+
+This is a zero-sized file
+
+Removed this file from filelists
+
+[larm@miaplacidus P3]$ for filelister in *.list; do export filelister; cat $filelister  | xargs -r -i bash -c 'grep -q "{}" ../../P3/$filelister.index.map || echo "missing in $filelister : {}"'; done > ~/P33_unindexedFiles.txt
+
+
+cat ~/P33_unindexedFiles.txt | cut -d' ' -f3 | sort -u | xargs -r -i rm /data01/larm/dr-dat-index/P3/{}.*
+
+cat ~/P32_unindexedFiles.txt | cut -d' ' -f3 | sort -u | \
+ xargs -r -P22 -I{split}  ismir_build_index \
+  -d /data01/larm/dr-dat-index/P3/{split}.index \
+  -f /data01/larm/dr-dat-index/filelists/P3/{split} \
+  @>  ~/P3.log;
+  
+  
+ for filelister in *.list; do export filelister; cat $filelister | xargs -r -i bash -c 'grep -q "{}" ../../P1/$filelister.index.map || echo "missing in $filelister : {}"'; done > ~/P1_unindexedFiles.txt
+
+
+
+cat ~/P34_unindexedFiles.txt | cut -d' ' -f3 | sort -u | xargs -r -P22 -I{split} ~/runIsmirIndex.sh "{split}"
+
+
+
+
+
+
+
+
+
+
+cat ~/P34_unindexedFiles.txt | cut -d' ' -f3 | sort -u | xargs -r -i rm /data01/larm/dr-dat-index/P3/{}.*
+
+
+
+
+
+
+
+ for filelister in *.list; do export filelister; cat $filelister | xargs -r -i bash -c 'grep -q "{}" ../../P2/$filelister.index.map || echo "missing in $filelister : {}"'; done > ~/P2_unindexedFiles.txt
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+for filelister in *.list; do export filelister; cat $filelister  | xargs -r -i bash -c 'grep -q "{}" ../../P3/$filelister.index.map || echo "missing in $filelister : {}"'; done > ~/P34_unindexedFiles.txt
+
+ 
+ 
+ 
+ 
+ 
+ 
+ find /dr-dat/3/files/Batch24/Disc22/mp3_128kbps/ -name '*.mp3' -size -5000c -type f
+ 
+ 
+ 
+ 
+ /dr-dat/3/files/Batch24/Disc22/mp3_128kbps/
+ 
+ 
+ 
+ 
+ 
+ for filelister in *.list; do export filelister; cat $filelister  | xargs -r -i bash -c 'grep -q "{}" ../../P3/$filelister.index.map || echo "missing in $filelister : {}"'; done > ~/P35_unindexedFiles.txt

@@ -342,3 +342,9 @@ real	2m16,148s
 user	2m12,254s
 sys	    0m1,585s
 ```
+
+
+Building the great indexes
+
+P2
+`ls -1 dr-dat.P2.*.list | xargs -r -P8 -I{split}  ../build/apps/ismir_build_index -d db/{split}.index -f $PWD/{split} @> P2.log`

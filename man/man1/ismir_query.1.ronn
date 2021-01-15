@@ -15,10 +15,22 @@ If given a WAV file, you must ensure that it are in 5512Hz beforehand.
 ## OPTIONS
   -q [ --query ] arg           Audio query file
 
+  -c [ --criteria ] arg        Criteria for hit; between 0 and 8192; default "2867.2" This is the max distance allowed for something to be called a hit.
+  Anything above 3200 is very unlikely to be a correct result.
+
   -d [ --dbname ] arg          List of databases to query. At least one must be given
 
   -p [ --processed-query ] arg Preprocessed query file. Not currently implemented
 
+## OUTPUT
+
+The program will output a line per hit, as below:
+
+   match in '/dr-dat/4/files/Batch33/Disc13/mp3_128kbps/P3_2200_0000_041202_001.mp3' at 00:01:35 with distance 1207
+
+Distance is a number between 0 and 8192, indicating how "good" the hit is. The default criteria corresponds to 35% of 8192,
+which seems to be a good value. Most hits will be with a distance in the 1200-1300 range.
+
 ## AUTHOR
-Jesper Sindahl Nielsen <jsn@statsbiblioteket.dk>
-Asger Askov Blekinge <abr@kb.dk>
+* Jesper Sindahl Nielsen <jsn@statsbiblioteket.dk>
+* Asger Askov Blekinge <abr@kb.dk>

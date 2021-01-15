@@ -41,7 +41,7 @@ void init(int argc, char *argv[]) {
     po::options_description hidden("Settings");
     hidden.add_options()
 	("query,q", po::value<std::string>(), "Audio query file")
-            ("criteria,c", po::value<float>(), "Criteria for hit, default 0.35")
+            ("criteria,c", po::value<float>(), "Criteria for hit, default 2867,2. This is the max distance allowed for something to be called a hit")
 	("dbname,d", po::value<std::vector<std::string>>(), "Database names")
 	("processed-query,p", po::value<std::string>(), "Preprocessed query file");
 

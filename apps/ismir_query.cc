@@ -9,11 +9,11 @@ using std::vector;
 namespace po = boost::program_options;
 namespace si = sound_index;
 
-void query(std::string &dbname, std::string &queryFile) {
+void query(std::string &dbname, std::string &queryFile, float criteria) {
     std::vector<std::string> res;
     si::fingerprint_db db;
     db.open(dbname);
-    db.query_scan(queryFile, res);
+    db.query_scan(queryFile, res, criteria);
     db.close();
 
     for (size_t i = 0; i < res.size(); ++i) {
@@ -27,6 +27,7 @@ void init(int argc, char *argv[]) {
     std::vector<std::string> dbname;
     std::string queryFile;
     std::string processedQueryFile;
+    float criteria;
     
     po::options_description generic("Program options");
     generic.add_options()
@@ -39,6 +40,7 @@ void init(int argc, char *argv[]) {
     po::options_description hidden("Settings");
     hidden.add_options()
 	("query,q", po::value<std::string>(), "Audio query file")
+            ("criteria,c", po::value<float>(), "Criteria for hit, default 0.35")
 	("dbname,d", po::value<std::vector<std::string>>(), "Database names")
 	("processed-query,p", po::value<std::string>(), "Preprocessed query file");
 
@@ -76,6 +78,12 @@ void init(int argc, char *argv[]) {
         queryExists = true;
     }
 
+      if (vm.count("criteria")) {
+            criteria = vm["criteria"].as<float>();
+        } else {
+            criteria = 0.35;
+        }
+
     if (vm.count("dbname")) {
         dbname = vm["dbname"].as<std::vector<std::string>>();
     } else {
@@ -86,7 +94,7 @@ void init(int argc, char *argv[]) {
     for (size_t i = 0; i < dbname.size(); ++i) {
         std::string current_dbname(dbname[i]);
 
-        query(current_dbname, queryFile);
+        query(current_dbname, queryFile, criteria);
     }
 
 }

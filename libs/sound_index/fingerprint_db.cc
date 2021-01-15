@@ -208,7 +208,7 @@ void si::fingerprint_db::insert(std::string filename, std::string indexedName) {
 
 }
 
-void si::fingerprint_db::query_scan(std::string filename, std::vector<std::string> &ret) {
+void si::fingerprint_db::query_scan(std::string filename, std::vector<std::string> &ret, float criteria) {
     // "filename" is the name of the wav file that is our query.
     ret.clear();
     //AudioFile a(filename.c_str());
@@ -269,7 +269,7 @@ void si::fingerprint_db::query_scan(std::string filename, std::vector<std::strin
 
             //dist = fullHamming(fingerprints, db, i);
             //std::tie(earlyTermination, dist) = hammingEarlyTerminate(fingerprints, db, i);
-            if (!earlyTermination && dist < macro_sz*sizeof(uint32_t)*0.35*8) {
+            if (!earlyTermination && dist < macro_sz*sizeof(uint32_t)*criteria*8) {
                 prevMatchPos = pos;
                 std::map<size_t, std::string>::iterator iter = idToFile.lower_bound(pos);
 

@@ -27,7 +27,7 @@ namespace sound_index {
 
         void query_preprocessed(std::string filename, std::vector<std::string> &results);
 
-        void query_scan(std::string filename, std::vector<std::string> &results);
+        void query_scan(std::string filename, std::vector<std::string> &results, float criteria);
 
         void query(std::string filename, std::vector<std::string> &results);
     

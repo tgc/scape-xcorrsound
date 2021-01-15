@@ -16,6 +16,7 @@ namespace sound_index {
         fingerprint_strategy *fp_strategy;
 
     public:
+        static const uint32_t macro_sz;
 
         fingerprint_db();
 

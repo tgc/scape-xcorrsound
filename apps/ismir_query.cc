@@ -22,8 +22,16 @@ void query(std::string &dbname, std::string &queryFile, float criteria) {
 
 }
 
+template <typename T>
+std::string to_string_with_precision(const T a_value, const int n = 6)
+{
+    std::ostringstream out;
+    out.precision(n);
+    out << std::fixed << a_value;
+    return out.str();
+}
+
 void init(int argc, char *argv[]) {
-    uint32_t macro_sz = 256;
 
     std::vector<std::string> dbname;
     std::string queryFile;
@@ -37,11 +45,17 @@ void init(int argc, char *argv[]) {
     po::positional_options_description positional;
         positional.add("dbname", -1);
 
-
+    double maxCriteria = si::fingerprint_db::macro_sz*sizeof(uint32_t)*8;
+    double defaultCriteria = 0.35*maxCriteria;
+    std::string criteriaHint = std::string("Criteria for hit; between 0 and ") +
+                                to_string_with_precision(maxCriteria,1) +
+                                std::string(". Default ") +
+                                to_string_with_precision(defaultCriteria,1) +
+                                std::string(". This is the max distance allowed for something to be called a hit");
     po::options_description hidden("Settings");
     hidden.add_options()
 	("query,q", po::value<std::string>(), "Audio query file")
-            ("criteria,c", po::value<float>(), "Criteria for hit, default 2867,2. This is the max distance allowed for something to be called a hit")
+            ("criteria,c", po::value<float>(), criteriaHint.c_str())
 	("dbname,d", po::value<std::vector<std::string>>(), "Database names")
 	("processed-query,p", po::value<std::string>(), "Preprocessed query file");
 
@@ -82,7 +96,7 @@ void init(int argc, char *argv[]) {
       if (vm.count("criteria")) {
             criteria = vm["criteria"].as<float>();
         } else {
-            criteria = macro_sz*sizeof(uint32_t)*0.35*8;
+            criteria = defaultCriteria;
         }
 
     if (vm.count("dbname")) {

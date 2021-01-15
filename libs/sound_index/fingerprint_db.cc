@@ -16,12 +16,20 @@
 namespace si = sound_index;
 //using namespace std;
 
+//Constants that other parts might need
+const uint32_t si::fingerprint_db::macro_sz = 256;
+
+
 namespace {
 
-    uint32_t macro_sz = 256;
+    uint32_t macro_sz = si::fingerprint_db::macro_sz; //block-count?
     size_t fpSkip = 50; // skip this much into fingerprint array.
-    size_t nearRange = 150; // how far to look around a position that
-			    // is significantly different from noise.
+    size_t nearRange = 150; // how far to look around a position that is significantly different from noise.
+
+    double minPercentageForNoise = 0.43; //Noise will have a overlap in this range
+    double maxPercentageForNoise = 0.537;
+
+    uint32_t working_size = 1024*1024; //The amount of data to work on in each step
 
     uint32_t hammingLookup16(uint32_t n) {
         uint16_t a = n & 0xFFFF;
@@ -86,7 +94,7 @@ namespace {
 	    if ((i % 5) == 0 && i > macro_sz / 10) {
 		double bitsSeenSoFar = i*sizeof(uint32_t)*8;
 		double errorPercentage = dist / bitsSeenSoFar;
-		if (errorPercentage > 0.43 && errorPercentage < 0.537) {
+		if (errorPercentage > minPercentageForNoise && errorPercentage < maxPercentageForNoise) {
 		    return std::make_pair(true, dist);
 		}
 	    }
@@ -164,6 +172,7 @@ namespace {
     
 }
 
+
 si::fingerprint_db::fingerprint_db() {
     this->fp_strategy = new si::fingerprint_strategy_ismir();
     //this->fp_strategy = new si::fingerprint_strategy_chroma();
@@ -223,14 +232,14 @@ void si::fingerprint_db::query_scan(std::string filename, std::vector<std::strin
 
     this->fp_strategy->getFingerprintsForFile(filename, fingerprints);
 
-    // size_t bestMatch = 1024*1024;
+    // size_t bestMatch = working_size;
     // size_t bestMatchDistance = fingerprints.size();
 
-    std::vector<uint32_t> db(1024*1024+macro_sz, 0);
+    std::vector<uint32_t> db(working_size+macro_sz, 0);
     
     std::ifstream fin(this->dbFilename.c_str(), std::ifstream::in | std::ifstream::binary);
 
-    uint32_t *buf = new uint32_t[1024*1024];
+    uint32_t *buf = new uint32_t[working_size];
     size_t end = 0;
     size_t pos = 0;
     size_t prevMatchPos = std::numeric_limits<size_t>::max();
@@ -241,7 +250,7 @@ void si::fingerprint_db::query_scan(std::string filename, std::vector<std::strin
             db[i] = db[db.size()-macro_sz+i];
         }
 
-        fin.read((char*)buf, 1024*1024*sizeof(uint32_t));
+        fin.read((char*)buf, working_size*sizeof(uint32_t));
 
         size_t count = fin.gcount()/sizeof(uint32_t);
         end = count + macro_sz;
@@ -354,7 +363,7 @@ void si::fingerprint_db::merge(std::vector<std::string> &inputs) {
         char c;
         while (strFileIn.get(c)) {
             _strFileOut.put(c);
-            //strFileIn.read(buf, 1024*1024*16);
+            //strFileIn.read(buf, working_size*16);
             //_strFileOut.write(buf, strFileIn.gcount());
         }
 

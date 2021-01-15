@@ -35,7 +35,7 @@ fi
 
 export channel="$1"
 shift
-if [[ ! $channel =~ ^P[1-3]$ ]]; then
+if [[ ! $channel =~ ^P[1-4]$ ]]; then
   usage
   exit 1
 fi
@@ -65,4 +65,4 @@ echo -e "$indexes" | xargs -r -i -P"$ISMIR_CONCURRENT_SEARCH" bash -c 'mkdir -p 
  sort -t '_' -k4n -k2n |\
  sed 's/mp3-128kbps/mp3_128kbps/'
 
-# match in '/dr-dat/4/files/Batch33/Disc13/mp3_128kbps/P3_2200_0000_041202_001.mp3' at 00:01:35 with distance 1207x
+# match in '/dr-dat/4/files/Batch33/Disc13/mp3_128kbps/P3_2200_0000_041202_001.mp3' at 00:01:35 with distance 1207

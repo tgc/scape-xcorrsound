@@ -1,3 +1,39 @@
+scape-xcorrsound (2.1.0)
+* ismir_query: Criteria input
+* Formatting changes to manpages
+* install ismir_query, ismir_merge, ismir_build_index binaries and manpages
+* ismir: Do not fail on space in filenames
+* Updated manpages with changes in CLI interfaces
+* ismir_query: can search in multiple databases
+* sound-match: uses boost param parsing. Takes critera as double now
+* ismir: Do not output ffmpeg when working on mp3
+* Ismir: can index mp3 files directly by ffmpeg converting on the fly
+* Make/cmake part of setup
+* Ismir_index: Map files are postfixed with map, not prefixed
+* travis: try to install the nessesary packages through ubuntu, not gem
+* travis: use the toolchain way to install ubuntu packages
+* matrix eval of different versions of g++ and use exact ubuntu dist=trusty
+* updates to include ismir documentation in ABOUT and man files
+* Force install of g++ 4.8.
+* Options for old cmake version.
+* Tie to specific mustache version for ronn.
+* Changed the silence detection threshold. Now more sound is required to declare it as 'non-silence'
+* added how to compile
+* Added c++11 as a compiler flag in cmake. Fixes #15.
+* Faster query algorithm for sounds index based on some statistics.
+* Added descriptions for algorithms in the Algorithms section in the ABOUT file.
+* documentation updates
+* toolspec updates
+* Fixes #13.
+* added scape toolspecs for xcorrSound waveform-compare
+* Added --version to overlap-analysis and sound-match.
+* Fixes #6
+* travis does not depend on git
+* travis includes the dependencies for Ronn
+
+scape-xcorrsound (2.0.2)
+?
+
 scape-xcorrsound (2.0.0) trusty; urgency=low
   * Fixed the debian packaging
   * Scape micro site

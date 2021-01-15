@@ -23,6 +23,7 @@ void query(std::string &dbname, std::string &queryFile, float criteria) {
 }
 
 void init(int argc, char *argv[]) {
+    uint32_t macro_sz = 256;
 
     std::vector<std::string> dbname;
     std::string queryFile;
@@ -81,7 +82,7 @@ void init(int argc, char *argv[]) {
       if (vm.count("criteria")) {
             criteria = vm["criteria"].as<float>();
         } else {
-            criteria = 0.35;
+            criteria = macro_sz*sizeof(uint32_t)*0.35*8;
         }
 
     if (vm.count("dbname")) {

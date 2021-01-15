@@ -269,7 +269,7 @@ void si::fingerprint_db::query_scan(std::string filename, std::vector<std::strin
 
             //dist = fullHamming(fingerprints, db, i);
             //std::tie(earlyTermination, dist) = hammingEarlyTerminate(fingerprints, db, i);
-            if (!earlyTermination && dist < macro_sz*sizeof(uint32_t)*criteria*8) {
+            if (!earlyTermination && dist < criteria) {
                 prevMatchPos = pos;
                 std::map<size_t, std::string>::iterator iter = idToFile.lower_bound(pos);
 

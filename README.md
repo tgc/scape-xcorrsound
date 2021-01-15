@@ -96,6 +96,12 @@ released under GPLv2, see [COPYING](https://github.com/openplanets/scape-xcorrso
 
 ## Features
 
+### Version 2.1.0
+* Ismir can index and search directly in mp3 files
+* Ismir_query can search in multiple database files
+* Ismir_query can use specific distance-criteria
+
+* soundmatch can use specific criteria
 
 ### Version 2.0.2
 

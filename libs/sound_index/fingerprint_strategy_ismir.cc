@@ -175,11 +175,13 @@ namespace {
         
             std::vector<double> tmp(frameLength);
             for (size_t i = 0; i < frameLength; ++i) {
+                //std::cout << "input[" << i << "]=" << input[i] << std::endl;
                 tmp[i] = input[frameStart+i];
             }
             normalize(tmp);
             for (size_t i = 0; i < frameLength; ++i) {
                 tmp[i] = tmp[i] * hanningWindow[i];
+//                std::cout << "tmp[" << i << "]=" << tmp[i] << std::endl;
             }
 
             computeFFT(tmp, transform);

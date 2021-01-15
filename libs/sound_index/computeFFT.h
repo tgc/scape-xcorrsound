@@ -17,6 +17,7 @@ template<typename T1, typename T2>
     fftw_complex *o = (fftw_complex*) fftw_malloc(sizeof(fftw_complex)*input.size());
 
     for (size_t i = 0; i < input.size(); ++i) {
+//        std::cout << "input[" << i << "]=" << input[i] << std::endl;
         t[i][0] = input[i];
         t[i][1] = 0;
     }
@@ -27,6 +28,7 @@ template<typename T1, typename T2>
     output.resize(input.size());
     for (size_t i = 0; i < input.size(); ++i) {
     	output[i] = std::complex<T2>(o[i][0], o[i][1]);
+//            std::cout << "output[" << i << "]=" << output[i] << std::endl;
     }
 
     fftw_destroy_plan(plan);

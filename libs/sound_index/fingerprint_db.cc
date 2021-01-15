@@ -37,8 +37,12 @@ namespace {
         std::ofstream of(dbFilename.c_str(), std::ios::out | std::ios::binary | std::ios::app);
 
         for (size_t i = 0; i < db.size(); ++i) {
+            //std::cout << "db[" << i << "]=" << db[i] << std::endl;
             of.write((char*) &db[i], sizeof(uint32_t));
         }
+//        std::cout << "db.size()" << "=" << db.size() << std::endl;
+//        std::cout << "of.tellp()" << "=" << of.tellp() << std::endl;
+
         size_t end = of.tellp() / 4;
         of.close();
 
